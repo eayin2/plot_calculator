@@ -1,7 +1,10 @@
 # Description of plot_calculator
-Facilitates to calculate and plot with sympy, numpy, scipy and matplotlib by
-using presettings. Example commands in `help()` and `help_plot()` help to recall
-the right commands for calculation and plotting graphs.
+Calculation enviroment in Python's interactive console, facilitating calculation and plotting
+with sympy, numpy, scipy and matplotlib with subjective function imports, a small wrapper around
+matplotlib and examples at hand.
+
+Use `help_calc()` and `help_plot()` within the interactive calculation console to recall the
+functions and to see examples.
 
 # Installation with pypoetry
 `poetry install`
@@ -17,5 +20,7 @@ the right commands for calculation and plotting graphs.
   Windows Terminal in Windows 10 (not installed by default).
 
 # Dev notes
-- Open plots in webbrowser and copy the plot to clipboard from there. Don't use the
-  "addcopyfighandler" implementation, as it causes dependency issues with pywin32
+- Opening plots with webbrowser.open to copy plots easily from the browser to the clipboard. Not
+  using a custom clipboard implementation from within matplotlib's plot editor, as done formerly
+  with an "addcopyfighandler" function, because that causes dependency issues with pywin32 on
+  Windows and isn't straightforward.

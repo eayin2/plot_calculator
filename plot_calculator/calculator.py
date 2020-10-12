@@ -1,9 +1,13 @@
-import io
 import code
+import inspect
+import io
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pathlib
+import platform
+import plot_calculator
+import subprocess
 import sympy as sp
 import sympy
 import webbrowser
@@ -40,13 +44,36 @@ def suppress_qt_warnings():
 
 suppress_qt_warnings()
 
-
 # Configure the size of the plots
 plot_size = .35
 
+# Get path of this module for the help text file location
+module_dir = os.path.dirname(inspect.getfile(plot_calculator))
+
+
+def open_help_text(filepath):
+    # macos
+    if platform.system() == 'Darwin':
+        subprocess.call(('open', filepath))
+    elif platform.system() == 'Windows':
+        os.startfile(filepath)
+    else:
+        # Linux
+        subprocess.call(('less', filepath))
+
+
+def help_calc():
+    """Show calculation help text"""
+    open_help_text(os.path.join(module_dir, "help-calc.txt"))
+
+
+def help_plot():
+    """Show plotting help text"""
+    open_help_text(os.path.join(module_dir, "help-plot.txt"))
+
 
 class MakePlot:
-    """Matplotlib presettings"""
+    """Matplotlib presettings - facilitates creating graphs."""
 
     def new_plot(self):
         """Create a new figure"""
@@ -89,25 +116,23 @@ class MakePlot:
         plot1(new_plot=False)
 
 
-# Calculator functions
-
-
 def arctan(x):
-    print("(W) Better use atan (sympy)")
+    print("(W) For calculation better use sp.atan. For plotting: np.arctan")
     return np.arctan(x)
 
 
 def arccos(x):
-    print("(W) Better use acos (sympy)")
+    print("(W) For calculation better use sp.acos. For plotting: np.arctan")
     return np.arccos(x)
 
 
 def arcsin(x):
-    print("(W) Better use asin (sympy)")
+    print("(W) For calculation better use sp.asin. For plotting: np.arctan")
     return np.arcsin(x)
 
 
 def deg(val):
+    """Return degrees in decimals, not simplified pi form."""
     return sp.deg(val).n()
 
 
@@ -116,14 +141,16 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def frac(fraction):
-    """Use limit_denominator to simplify the fraction, else you get weird fractions"""
+def frac1(fraction):
+    """
+    Use by default limit_denominator to simplify the fraction, else you get weird
+    fractions.
+    """
     return Fraction(fraction).limit_denominator()
 
 
 def frac2(fraction):
-    """Same as frac, but iterates over a list of values to simplify each to a fraction.
-    Use limit_denominator to simplify the fraction, else you get weird fractions"""
+    """Same as frac, but iterate over a list of decimals."""
     return [Fraction(x).limit_denominator() for x in fraction]
 
 
@@ -135,174 +162,50 @@ def solve(a, b):
 
 
 def round2(val):
+    """Round decimal at the 6th decimal."""
     return around(val, decimals=6)
 
 
-lgs = solve
-
-
-def help():
-    print(""
-        "Calculator usage:\n"
-        "- help() and clear()\n"
-        "- 2**2 - 2 to the power of 2. Don't use 2^2\n"
-        "- atan(-2/2) will return the decimal value. Use atan(-1) instead to get -pi/4 \n"
-        "Fraction with sympy\n"
-        "- Rational('1/3') - E.g.: 3*Rational('1/3')*Rational('2/5')\n"
-        "\n"
-        "Complex numbers with sympy\n"
-        " a = x+y*I\n"
-        " a.expand()\n"
-        "\n"
-        "Complex numbers with numpy using `1j`\n"
-        " a = 2+3*1j\n"
-        "\n"
-        "Custom function:\n"
-        "- frac(3.75) - A decimal to a fraction\n"
-        "- frac2([3.75, 2.5, 0.5]) - List of decimal to fractions\n"
-        "- Use imported modules: numpy, scipy, sympy. E.g. scipy.solve()\n"
-        "\n"
-        "Polynoms - sympy\n"
-        "- pdiv(x**2-x, x-1) - Polynom division. Requires one root. E.g. x-1 for root x=1\n"
-        "- expand((2*x-1)*(x**2-4)) - Expand term\n"
-        "- simplify(2*x**3+4*x**3+2*x+3*x) - Simplify term\n"
-        "\n"
-        "Equation equal sympy:\n"
-        "- exp(I*3/2*pi) - exp(-I*1/2*pi) == 0\n"
-        "- or also: exp(I*3/2*pi).equals(exp(-I*1/2*pi))\n"
-        "\n"
-        "Solve equation sympy:\n"
-        "- solve(a, b) or lgs(a, b) - Solve linear equation system. E.g.:\n"
-        "    a = array([[1,2], [0, 3]])\n"
-        "    b = array([5, 4])\n"
-        "    solve(a, b)\n"
-        "  Be aware: [1, 2, 4]**T transposes to a column vector and has to be added to the"
-        " matrix as a column.\n"
-        "- solveset(Eq(x, 1), x) Solve equation: \n"
-        "  x = symbols('x')\n"
-        "  solveset(Eq(x**2+x, 2), x)\n"
-        "\n"
-        "Trigonometric numpy:\n"
-        "- degrees() - numpy.degrees - Radiant to degrees\n"
-        "- radians() - numpy.radians - Degrees to radiant. E.g. sin(radians(90))\n"
-        "- arccos() - Arcuscosinus\n"
-        "\n"
-        "Trigonometric sympy:\n"
-        "- deg() - Sympy.deg - Radiant to degrees. Patched to return absolute value by default\n"
-        "- rad() - Sympy.rad - Radiant to degrees\n"
-        "- <object>.n() - (Sympy) Show not simplified result, but absolute result with"
-        " decimals. E.g. cos(rad(40)).n()\n"
-        "- More.. cos, sin, tan, cot, acos, asin, atan, acot, sinh, cosh, tanh, coth, asinh..\n"
-        "\n"
-        "Linear Algebra scipy:\n"
-        "- solve2() - scipy.solve - Solve matrix equation such as `A*X = B`\n"
-        "  E.g.: solve2(array([[3,5],[10,17]]), array([[1,2],[0,3]]))\n"
-        "\n"
-        "Linear Algebra sympy:\n"
-        "- Matrix() - sympy.matrix. E.g. sympy.dot requires sympy.matrix and not"
-        " numpy.array()\n"
-        "- Matrix(array(..)) - Convert numpy.array to Matrix\n"
-        "- det() - Determinant\n"
-        "  Example: det(Matrix([[1,2,5],[3,-4,7],[-3,12,-15]]))\n"
-        "  sympy.det\n"
-        "\n"
-        "Linear Algebra numpy:\n"
-        "- transpose() - Transposed matrix. E.g. transpose(array([1,2,3]))\n"
-        "- cross() - Cross product\n"
-        "- dot() - Scalar or dot product\n"
-        "- inv() - A**(-1), Inverse of a matrix\n"
-        "\n\n"
-    )
-
-
-def help_plot():
-    print(
-        'Example plots\n'
-        '\n'
-        'Ex. 1: Trigonometric functions with pi\n'
-        'x = np.arange(-2*np.pi, 2*np.pi, 0.001)\n'
-        'ax.plot(x, np.tan(x), label="tan(x)", linewidth=plot_size*10)\n'
-        'ax.plot(x, np.cos(x), label="cos(x)", linewidth=plot_size*10)\n'
-        '# Set legend\n'
-        'ax.legend(loc="upper right")\n'
-        '# Set axis\n'
-        'ax.axis([-2*np.pi, 2*np.pi, -2, 2])\n'
-        'plot1\n'
-        '\n'
-    )
-    print(
-        'Ex. 2: Formatted labels for graph:\n'
-        'ax.plot(x, np.sqrt(x**2-1), label=r"$\frac{e^x}{2}$", linewidth=plot_size*0.5)\n'
-        'ax.plot(np.cosh(x), np.sinh(x), label=r"$coshx, sinhx$", linewidth=plot_size*0.5)\n'
-        '\n'
-    )
-    print(
-        'Ex. 3: Plot some function z(t)\n'
-        't = np.arange(-3, 3, 0.01)\n'
-        'z = t**3\n'
-        'ax.plot(t, z, label="z(t)", linewidth=plot_size*10)\n'
-        '# Set axis\n'
-        'ax.axis([-2, 2, -2, 2])\n'
-        '# Custom function plots() to create the plot\n'
-        'plot1()\n'
-        '\n'
-    )
-    print(
-        'Ex. 4: Plot a complex function z(t)\n'
-        't = np.arange(-3, 6, 0.1)\n'
-        '# Use 1j for the imaginary number, not sympy.I\n'
-        'z = (1-t)*(-2-1j)+t*(2+3*1j)\n'
-        'ax.plot(z.real, z.imag, label="z(t)", linewidth=plot_size*10)\n'
-        '# Set axis\n'
-        'ax.axis([-3, 6, -3, 7])\n'
-        '# Custom function plots() to create the plot\n'
-        'plot1()\n'
-        '\n'
-    )
-    print(
-        "Settings and commands:\n"
-        "- plot_size = .35 - Set plot size\n"
-        "- ax.axis([-x, +x, -y, +y]) - Set the axis zoom. Set it optionally, by default matplotlib sets the zoom\n"
-        "  fine.\n"
-        "- ax.lines.pop(<graph number to remove>) - Remove a graph from the plot\n"
-        "- `import numpy as np` - Use e.g. np.pi, np.sin.. with matplotlib, not sympy.\n"
-        "- \n"
-        "\n"
-    )
-
 def start_calculator():
+    """Script entry point"""
     pass
+
+
+def R(frac):
+    """Alias for sympy.Rational to enter fractions."""
+    return Rational(frac)
 
 
 # Set up plot initially
 make_plot = MakePlot()
 make_plot.new_plot()
-
 ax = make_plot.ax
-
 # Create a plot and set a new plot
 plot1 = make_plot.plot1
-
 # Plot inside existing plot
 plot2 = make_plot.plot2
 
-
+# Aliases
 c = clear
-h = help
+help = help_calc
+h = help_calc
 hp = help_plot
+lgs = solve
+F = R
+frac3 = R
 
-# Default symbols
+# Default sympy symbols
 a = symbols('a')
 b = symbols('b')
-c = symbols('c')
 x = symbols('x')
 y = symbols('y')
 z = symbols('z')
 t = symbols('t')
 u = symbols('u')
+v = symbols('v')
+w = symbols('w')
 
 print("plot_calculator\n")
 print("- help() - show all calculator commands\n")
 print("- help_plot() to see examples for plotting graphs.\n")
-
 code.interact(local=locals())

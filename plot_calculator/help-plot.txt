@@ -1,0 +1,36 @@
+Plot with numpy and matplotlib:
+
+Ex. 1: Trigonometric
+t = np.arange(-1*np.pi, 3*np.pi, 0.01)
+ax.plot(t, np.tan(t), label="tan(t)", linewidth=plot_size*10)
+ax.plot(t, np.cos(t), label="cos(t)", linewidth=plot_size*10)
+# Set legend
+ax.legend(loc="upper right")
+# Set axis
+ax.axis([-1*np.pi, 3*np.pi, -2, 2])
+plot1()
+
+Ex. 2: General
+t = np.arange(-3, 3, 0.01)
+z = t**3
+ax.plot(t, z, label="z(t)", linewidth=plot_size*10)
+# Custom function plots() to create the plot
+plot1()
+
+Ex. 3: Complex
+t = np.arange(-3, 6, 0.1)
+# Use 1j for the imaginary number, not sympy.I
+z = (1-t)*(-2-1j)+t*(2+3*1j)
+ax.plot(z.real, z.imag, label="z(t)", linewidth=plot_size*10)
+# Custom function plots() to create the plot
+plot1()
+
+Setting: plot_size = .35 - Set plot size
+Commands:
+- ax.axis([-x, +x, -y, +y]) - Set axis 'zoom'. Set it optionally, by default matplotlib sets the zoom
+  fine.
+- ax.lines.pop(<graph number to remove>) - Remove a graph from the plot
+- ax.plot(x, y, label=r"$\frac{e^x}{2}$") - Format labels. Other: r"$coshx, sinhx
+
+Recall:
+- Use numpy (not sympy) to plot functions with matplotlib.

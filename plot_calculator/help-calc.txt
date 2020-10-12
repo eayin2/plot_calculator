@@ -1,0 +1,74 @@
+Calculator usage:
+- help() and clear()
+- 2**2 - 2 to the power of 2. Don't use 2^2
+- atan(-2/2) will return the decimal value. Use atan(-1) instead to get -pi/4 
+  Fraction with sympy
+
+Sympy fractions, Rationals
+- Rational('1/3') - E.g.: 3*Rational('1/3')*Rational('2/5')
+  Aliased to: R, F or frac3
+
+  Ex. with alias F:
+  - cos(F("1/4")*pi) + I*sin(F("1/4")*pi) + cos(F("3/4")*pi) + I*sin(F("3/4")*pi)
+
+Complex numbers with sympy
+- a = x+y*I
+  a.expand()
+
+Complex numbers with numpy using `1j`
+- a = 2+3*1j
+
+Custom function:
+- frac1(3.75) - A decimal to a fraction
+- frac2([3.75, 2.5, 0.5]) - List of decimal to fractions
+- Use imported modules: numpy, scipy, sympy. E.g. scipy.solve()
+
+Polynoms - sympy
+- pdiv(x**2-x, x-1) - Polynom division. Requires one root. E.g. x-1 for root x=1
+- expand((2*x-1)*(x**2-4)) - Expand term
+- simplify(2*x**3+4*x**3+2*x+3*x) - Simplify term
+
+Equation equal sympy:
+- exp(I*3/2*pi) - exp(-I*1/2*pi) == 0
+- or also: exp(I*3/2*pi).equals(exp(-I*1/2*pi))
+
+Solve equation sympy:
+- solve(a, b) or lgs(a, b) - Solve linear equation system. E.g.:
+    a = array([[1,2], [0, 3]])
+    b = array([5, 4])
+    solve(a, b)
+  Be aware: [1, 2, 4]**T transposes to a column vector and has to be added to the
+ matrix as a column.
+- solveset(Eq(x, 1), x) Solve equation: 
+  x = symbols('x')
+  solveset(Eq(x**2+x, 2), x)
+
+Trigonometric numpy:
+- degrees() - numpy.degrees - Radiant to degrees
+- radians() - numpy.radians - Degrees to radiant. E.g. sin(radians(90))
+- arccos() - Arcuscosinus
+
+Trigonometric sympy:
+- deg() - Sympy.deg - Radiant to degrees. Patched to return absolute value by default
+- rad() - Sympy.rad - Radiant to degrees
+- <object>.n() - (Sympy) Show not simplified result, but absolute result with
+  decimals. E.g. cos(rad(40)).n()
+- More.. cos, sin, tan, cot, acos, asin, atan, acot, sinh, cosh, tanh, coth, asinh..
+
+Linear Algebra scipy:
+- solve2() - scipy.solve - Solve matrix equation such as `A*X = B`
+  E.g.: solve2(array([[3,5],[10,17]]), array([[1,2],[0,3]]))
+
+Linear Algebra sympy:
+- Matrix() - sympy.matrix. E.g. sympy.dot requires sympy.matrix and not
+  numpy.array()
+- Matrix(array(..)) - Convert numpy.array to Matrix
+- det() - Determinant
+  Example: det(Matrix([[1,2,5],[3,-4,7],[-3,12,-15]]))
+  sympy.det
+
+Linear Algebra numpy:
+- transpose() - Transposed matrix. E.g. transpose(array([1,2,3]))
+- cross() - Cross product
+- dot() - Scalar or dot product
+- inv() - A**(-1), Inverse of a matrix
