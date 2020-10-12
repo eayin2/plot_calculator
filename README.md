@@ -1,7 +1,7 @@
-# Description of plot_calculator
-Calculation enviroment in Python's interactive console, facilitating calculation and plotting
-with sympy, numpy, scipy and matplotlib with subjective function imports, a small wrapper around
-matplotlib and examples at hand.
+# `plot_calculator` - Calculator with Python's interactive shell
+`plot_calculator` facilitates calculation and plotting inside Python's interactive shell by
+importing selective functions from sympy, numpy, scipy and matplotlib and by using a small
+wrapper around matplotlib for plotting graphs.
 
 Use `help_calc()` and `help_plot()` within the interactive calculation console to recall the
 functions and to see examples.

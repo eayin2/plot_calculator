@@ -8,14 +8,14 @@ ax.plot(t, np.cos(t), label="cos(t)", linewidth=plot_size*10)
 ax.legend(loc="upper right")
 # Set axis
 ax.axis([-1*np.pi, 3*np.pi, -2, 2])
-plot1()
+plot()
 
 Ex. 2: General
 t = np.arange(-3, 3, 0.01)
 z = t**3
 ax.plot(t, z, label="z(t)", linewidth=plot_size*10)
 # Custom function plots() to create the plot
-plot1()
+plot()
 
 Ex. 3: Complex
 t = np.arange(-3, 6, 0.1)
@@ -23,7 +23,7 @@ t = np.arange(-3, 6, 0.1)
 z = (1-t)*(-2-1j)+t*(2+3*1j)
 ax.plot(z.real, z.imag, label="z(t)", linewidth=plot_size*10)
 # Custom function plots() to create the plot
-plot1()
+plot()
 
 Setting: plot_size = .35 - Set plot size
 Commands:
@@ -31,6 +31,34 @@ Commands:
   fine.
 - ax.lines.pop(<graph number to remove>) - Remove a graph from the plot
 - ax.plot(x, y, label=r"$\frac{e^x}{2}$") - Format labels. Other: r"$coshx, sinhx
+- del_plot() - Delete existing plots or use: ax.lines = []
 
 Recall:
 - Use numpy (not sympy) to plot functions with matplotlib.
+
+Other notes:
+- For plotting complex functions with complex paramters use MATLAB, which is easier than with
+  matplotlib.
+  See: https://de.mathworks.com/help/matlab/ref/meshgrid.html and
+  https://www.youtube.com/watch?v=kUsUHA7qLW4
+
+  In MATLAB e.g.:
+
+a = -2:0.1:1;
+b = -2:0.1:2;
+[A,B] = meshgrid(a,b);
+z = A + 1i*B
+y = 4./(1+4*i*z)
+surfc(a, b, abs(y))
+
+  The corresponding locus of that complex function would be in matplotlib:
+
+t = np.arange(-100, 100, 0.01)
+# For the locus we feed the function only real numbers `t`.
+f = 4*(1+4*1j*t)**(-1)
+ax.plot(f.real, f.imag, label="f(t)", linewidth=plot_size*10)
+# Custom function plots() to create the plot
+plot()
+
+  You can see the locus also in the 3D MATLAB plot when you select the point where Y=0.
+  E.g. X=1, Y=0, abs(Y)=0.6 is a point on the locus.

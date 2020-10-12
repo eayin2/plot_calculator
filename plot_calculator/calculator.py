@@ -13,6 +13,7 @@ import sympy
 import webbrowser
 
 from appdirs import user_cache_dir
+from collections import defaultdict, OrderedDict
 from fractions import Fraction
 from numpy import *
 from numpy.linalg import *
@@ -62,6 +63,21 @@ def open_help_text(filepath):
         subprocess.call(('less', filepath))
 
 
+def example():
+    """Show examples"""
+    examples = defaultdict(str)
+    files = os.listdir(os.path.join(module_dir, "example"))
+    for i, ex in enumerate(files):
+        i = str(i)
+        examples[i] = ex
+        print("(%s) %s" % (i, ex))
+    ex_no = input("Enter number of example to open:")
+    print(ex_no)
+    print(examples)
+    print(examples[ex_no])
+    open_help_text(os.path.join(module_dir, "example", examples[ex_no]))
+
+
 def help_calc():
     """Show calculation help text"""
     open_help_text(os.path.join(module_dir, "help-calc.txt"))
@@ -75,7 +91,7 @@ def help_plot():
 class MakePlot:
     """Matplotlib presettings - facilitates creating graphs."""
 
-    def new_plot(self):
+    def __init__(self):
         """Create a new figure"""
         # Move left y-axis and bottim x-axis to centre, passing through (0,0)
         self.fig = plt.figure()
@@ -87,7 +103,7 @@ class MakePlot:
         plt.xticks(fontsize=plot_size*40)
         plt.yticks(fontsize=plot_size*40)
 
-    def plot1(self, new_plot=True):
+    def plot(self, new_plot=True):
         """Plot the graph. See examples for how to create graph."""
         plt.legend(loc="upper right")
         leg = plt.legend()
@@ -106,14 +122,10 @@ class MakePlot:
         pathlib.Path(user_cache_dir(appname, appauthor)).mkdir(parents=True, exist_ok=True)
         self.fig.savefig(tmp_plot)
         webbrowser.open(tmp_plot)
-        # plt.show()
-        if new_plot:
-            self.new_plot()
+        # ax.show()
 
-
-    def plot2(self):
-        """Plot inside the same figure"""
-        plot1(new_plot=False)
+    def reset_plot(self):
+        self.ax.lines = []
 
 
 def arctan(x):
@@ -122,12 +134,12 @@ def arctan(x):
 
 
 def arccos(x):
-    print("(W) For calculation better use sp.acos. For plotting: np.arctan")
+    print("(W) For calculation better use sp.acos. For plotting: np.arccos")
     return np.arccos(x)
 
 
 def arcsin(x):
-    print("(W) For calculation better use sp.asin. For plotting: np.arctan")
+    print("(W) For calculation better use sp.asin. For plotting: np.arcsin")
     return np.arcsin(x)
 
 
@@ -178,12 +190,12 @@ def R(frac):
 
 # Set up plot initially
 make_plot = MakePlot()
-make_plot.new_plot()
 ax = make_plot.ax
-# Create a plot and set a new plot
-plot1 = make_plot.plot1
-# Plot inside existing plot
-plot2 = make_plot.plot2
+# Create a plot
+plot = make_plot.plot
+clear_plot = make_plot.reset_plot
+del_plot = make_plot.reset_plot
+
 
 # Aliases
 c = clear
@@ -197,6 +209,7 @@ frac3 = R
 # Default sympy symbols
 a = symbols('a')
 b = symbols('b')
+s = symbols('s')
 x = symbols('x')
 y = symbols('y')
 z = symbols('z')
@@ -206,6 +219,7 @@ v = symbols('v')
 w = symbols('w')
 
 print("plot_calculator\n")
-print("- help() - show all calculator commands\n")
-print("- help_plot() to see examples for plotting graphs.\n")
+print("- help() - Show all calculation commands")
+print("- help_plot() - How to plot graphs")
+print("- example() - Show examples\n")
 code.interact(local=locals())
