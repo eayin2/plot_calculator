@@ -202,6 +202,7 @@ c = clear
 help = help_calc
 h = help_calc
 hp = help_plot
+hh = help_plot
 lgs = solve
 F = R
 frac3 = R
