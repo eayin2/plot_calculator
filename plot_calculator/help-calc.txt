@@ -1,74 +1,140 @@
-Calculator usage:
-- help() and clear()
-- 2**2 - 2 to the power of 2. Don't use 2^2
+===========================================
+Manual for calculation with plot_calculator
+===========================================
+
+Usage
+=====
+- help() - Open this manual
+- clear() - Clear the screen
+- Exponentiate Ex.: 2**2; Don't use 2^2
 - atan(-2/2) will return the decimal value. Use atan(-1) instead to get -pi/4 
   Fraction with sympy
 
-Sympy fractions, Rationals
-- Rational('1/3') - E.g.: 3*Rational('1/3')*Rational('2/5')
-  Aliased to: R, F or frac3
 
-  Ex. with alias F:
-  - cos(F("1/4")*pi) + I*sin(F("1/4")*pi) + cos(F("3/4")*pi) + I*sin(F("3/4")*pi)
-
-Complex numbers with sympy
-- a = x+y*I
-  a.expand()
-
-Complex numbers with numpy using `1j`
-- a = 2+3*1j
-
-Custom function:
+Custom functions
+================
 - frac1(3.75) - A decimal to a fraction
 - frac2([3.75, 2.5, 0.5]) - List of decimal to fractions
 - Use imported modules: numpy, scipy, sympy. E.g. scipy.solve()
 
-Polynoms - sympy
+
+Sympy
+=====
+
+General
+-------
+- Fractions
+  Rational('1/3') - E.g.: 3*Rational('1/3')*Rational('2/5')
+  Aliased to: R, F or frac3
+  Ex. with alias F:
+  - cos(F("1/4")*pi) + I*sin(F("1/4")*pi) + cos(F("3/4")*pi) + I*sin(F("3/4")*pi)
+- Check if two terms are equal
+  exp(I*3/2*pi) - exp(-I*1/2*pi) -- 0
+  or also: exp(I*3/2*pi).equals(exp(-I*1/2*pi))
+- Factorial (n-Fakultät)
+  Ex.: factorial(3)
+
+Analysis
+--------
+- Differentiate function
+  f = x**2 + 1
+  f.diff()
+  # where x is a symbolic variable
+
+Complex number
+--------------
+- a = x+y*I
+  a.expand()
+
+Polynoms
+--------
 - pdiv(x**2-x, x-1) - Polynom division. Requires one root. E.g. x-1 for root x=1
 - expand((2*x-1)*(x**2-4)) - Expand term
 - simplify(2*x**3+4*x**3+2*x+3*x) - Simplify term
 
-Equation equal sympy:
-- exp(I*3/2*pi) - exp(-I*1/2*pi) == 0
-- or also: exp(I*3/2*pi).equals(exp(-I*1/2*pi))
-
-Solve equation sympy:
-- solve(a, b) or lgs(a, b) - Solve linear equation system. E.g.:
-    a = array([[1,2], [0, 3]])
-    b = array([5, 4])
-    solve(a, b)
-  Be aware: [1, 2, 4]**T transposes to a column vector and has to be added to the
- matrix as a column.
-- solveset(Eq(x, 1), x) Solve equation: 
-  x = symbols('x')
-  solveset(Eq(x**2+x, 2), x)
-
-Trigonometric numpy:
-- degrees() - numpy.degrees - Radiant to degrees
-- radians() - numpy.radians - Degrees to radiant. E.g. sin(radians(90))
-- arccos() - Arcuscosinus
-
-Trigonometric sympy:
+Trigonometry
+-------------
 - deg() - Sympy.deg - Radiant to degrees. Patched to return absolute value by default
 - rad() - Sympy.rad - Radiant to degrees
 - <object>.n() - (Sympy) Show not simplified result, but absolute result with
   decimals. E.g. cos(rad(40)).n()
 - More.. cos, sin, tan, cot, acos, asin, atan, acot, sinh, cosh, tanh, coth, asinh..
 
-Linear Algebra scipy:
-- solve2() - scipy.solve - Solve matrix equation such as `A*X = B`
-  E.g.: solve2(array([[3,5],[10,17]]), array([[1,2],[0,3]]))
-
-Linear Algebra sympy:
+Linear Algebra
+--------------
+- Solve equation
+  solve(a, b) or lgs(a, b) - Solve linear equation system. E.g.:
+    a = array([[1,2], [0, 3]])
+    b = array([5, 4])
+    solve(a, b)
+  Be aware: [1, 2, 4]**T transposes to a column vector and has to be added to the
+  matrix as a column.
+- solveset(Eq(x, 1), x) Solve equation: 
+  x = symbols('x')
+  solveset(Eq(x**2+x, 2), x)
 - Matrix() - sympy.matrix. E.g. sympy.dot requires sympy.matrix and not
   numpy.array()
 - Matrix(array(..)) - Convert numpy.array to Matrix
 - det() - Determinant
   Example: det(Matrix([[1,2,5],[3,-4,7],[-3,12,-15]]))
   sympy.det
+- Dot product: Matrix([1,2,1]).dot(Matrix([x,y-3,z-3]))
 
-Linear Algebra numpy:
-- transpose() - Transposed matrix. E.g. transpose(array([1,2,3]))
+
+Numpy
+=====
+
+Complex numbers
+---------------
+- Use `1j` for the imaginary number
+- a = 2+3*1j
+
+Trigonometry
+------------
+- degrees() - numpy.degrees - Radiant to degrees
+- radians() - numpy.radians - Degrees to radiant. E.g. sin(radians(90))
+- arccos() - Arcuscosinus
+
+
+Linear Algebra
+--------------
+- 3-dimensional Vector: array([1,2,3]).T
+  Alias ar(): ar([1,2,3]).T
+- (3x1)-Matrix: array([[1,2,3]]).T
+- Solve Matrix A*x=B
+  A = array([[1,2],[3,4]])
+  # Transpose of B
+  B = array([[5,6]]).T
+  linalg.solve(A, B)
+- transpose() - Transposed matrix. E.g. transpose(array([[1,2,3]]))
+  Transpose only works when you use double brackets around array. Ex.: [[1,2,3]], not just
+  [1,2,3].
+  Or just use simply: array([[1,2,3]]).T for the transposed matrix.
 - cross() - Cross product
-- dot() - Scalar or dot product
 - inv() - A**(-1), Inverse of a matrix
+- Outer product (Dyadisches Produkt) - Two brackets in array for matrix
+  Requires (m, 1) to (1, n) vectors with m, n in N.
+  dot(array([[1,2,3,5,6,7,8]]).T, array([[1,2]]))
+  or:
+  dot(array([[1,2,3]]).T, array([[1,2,3,4,5,6,7]]))
+- Absolute value (Betragsfunktion): norm == np.linal.norm
+  norm(ar([0,3,3])-(ar([3,-5,-2])+3*ar([1,2,1])))
+- Dot product - One Bracket in array for vector
+  dot == np.dot
+
+  dot(array([1,2,3]).T, array([1,2,3,4,5,6,7]))
+
+  Using sympy's symbolic variables x, y and z.
+  dot(ar([1, 2, 1]).T, ar([x, y-3, z-3]).T)
+
+
+
+
+scipy
+=====
+
+Linear Algebra
+--------------
+- solve2() - scipy.solve - Solve matrix equation such as `A*X = B`
+  E.g.: solve2(array([[3,5],[10,17]]), array([[1,2],[0,3]]))
+

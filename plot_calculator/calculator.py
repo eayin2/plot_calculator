@@ -7,6 +7,7 @@ import os
 import pathlib
 import platform
 import plot_calculator
+import scipy
 import subprocess
 import sympy as sp
 import sympy
@@ -19,12 +20,13 @@ from numpy import *
 from numpy.linalg import *
 from scipy.linalg import solve as solve2
 # numpy.cos, sin.. replaced by explicit sympy imports
-from sympy import Rational
-from sympy import exp
-from sympy import re, im, I, E
-from sympy import pi
-from sympy import sqrt
 from sympy import cos, sin, tan, cot, sec, csc
+from sympy import exp
+from sympy import Factorial
+from sympy import ln, log, sqrt
+from sympy import pi
+from sympy import Rational
+from sympy import re, im, I, E
 # csc := cosecant
 from sympy import acos, asin, atan, acot, asec
 from sympy import sinh, cosh, tanh, coth, sech, csch
@@ -197,6 +199,10 @@ clear_plot = make_plot.reset_plot
 del_plot = make_plot.reset_plot
 
 
+
+# Alias numpy
+ar = np.array
+
 # Aliases
 c = clear
 help = help_calc
@@ -212,6 +218,8 @@ a = symbols('a')
 b = symbols('b')
 s = symbols('s')
 x = symbols('x')
+# Only set of real numbers, for calculation with log()
+xr = symbols('xr', real=True)
 y = symbols('y')
 z = symbols('z')
 t = symbols('t')
