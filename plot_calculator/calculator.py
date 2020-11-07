@@ -22,11 +22,12 @@ from scipy.linalg import solve as solve2
 # numpy.cos, sin.. replaced by explicit sympy imports
 from sympy import cos, sin, tan, cot, sec, csc
 from sympy import exp
-from sympy import Factorial
+from sympy import factorial, integrate
 from sympy import ln, log, sqrt
 from sympy import pi
 from sympy import Rational
 from sympy import re, im, I, E
+from sympy.integrals import laplace_transform
 # csc := cosecant
 from sympy import acos, asin, atan, acot, asec
 from sympy import sinh, cosh, tanh, coth, sech, csch
@@ -118,6 +119,7 @@ class MakePlot:
         plt.legend(handletextpad=.8)
         # No grid preferred, because of overlayed grids in PDF editors
         # plt.grid(color='magenta', linestyle='dotted', linewidth=4)
+        plt.grid(color='lightgray',linestyle='--')
         appname = "plot_calculator"
         appauthor = "plot_calculator"
         tmp_plot = os.path.join(user_cache_dir(appname, appauthor), "tmp-plot.png")
@@ -125,9 +127,6 @@ class MakePlot:
         self.fig.savefig(tmp_plot)
         webbrowser.open(tmp_plot)
         # ax.show()
-
-    def reset_plot(self):
-        self.ax.lines = []
 
 
 def arctan(x):
@@ -172,7 +171,7 @@ def solve(a, b):
     """Solve a linear equation system"""
     solutions = linalg.solve(a, b)
     print(solutions)
-    return [frac(solution) for solution in solutions]
+    return [frac1(solution) for solution in solutions]
 
 
 def round2(val):
@@ -195,10 +194,21 @@ make_plot = MakePlot()
 ax = make_plot.ax
 # Create a plot
 plot = make_plot.plot
-clear_plot = make_plot.reset_plot
-del_plot = make_plot.reset_plot
 
 
+def reset_plot():
+    global ax
+    global plot
+    make_plot = MakePlot()
+    ax = make_plot.ax
+    # Create a plot
+    plot = make_plot.plot
+
+
+reset = reset_plot
+delete = reset_plot
+clear_plot = reset_plot
+del_plot = reset_plot
 
 # Alias numpy
 ar = np.array

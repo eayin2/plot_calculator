@@ -40,6 +40,10 @@ Analysis
   f = x**2 + 1
   f.diff()
   # where x is a symbolic variable
+- integrate(x**2, x)
+- Compute the Laplace Transform F(s) of f(t), t and s should be symbolic variables
+  laplace_transform(t, t, s)
+  laplace_transform(t/2-1, t, s)
 
 Complex number
 --------------
@@ -51,6 +55,9 @@ Polynoms
 - pdiv(x**2-x, x-1) - Polynom division. Requires one root. E.g. x-1 for root x=1
 - expand((2*x-1)*(x**2-4)) - Expand term
 - simplify(2*x**3+4*x**3+2*x+3*x) - Simplify term
+- Collect common powers of a term in an expression:
+  collect((a1*(s+3)**3+a2*(s+3)**2+a3*(s+3)+a4).expand(), s)
+  >> a1*s**3 + 27*a1 + 9*a2 + 3*a3 + a4 + s**2*(9*a1 + a2) + s*(27*a1 + 6*a2 + a3)
 
 Trigonometry
 -------------

@@ -6,8 +6,19 @@ wrapper around matplotlib for plotting graphs.
 Use `help_calc()` and `help_plot()` within the interactive calculation console to recall the
 functions and to see examples.
 
-# Installation with pypoetry
-`poetry install`
+# Installation
+
+## (1) With pypoetry
+Install pypoetry, see: https://github.com/python-poetry/poetry
+
+Then:
+```
+git clone https://github.com/eayin2/plot_calculator.git
+cd plot_calculator
+poetry install
+```
+
+Note:
 - In Linux pypoetry installs the script to
   `~/.cache/pypoetry/virtualenvs/<name-of-venv>/bin/plot_calculator`
   
@@ -18,6 +29,16 @@ functions and to see examples.
   Just run `plot_calculator`, but I recommend to create a shortcut of `plot_calculator.exe` and
   add `wt.exe` prior to the plot_calculator.exe path in the shortcut properties. `wt.exe` is
   Windows Terminal in Windows 10 (not installed by default).
+
+## (2) With virtualenv
+```
+virtualenv myenv
+git clone https://github.com/eayin2/plot_calculator.git
+cd plot_calculator
+../myenv/bin/pip3 install .
+```
+
+Then Run: `../myenv/bin/plot_calculator` to start the calculator.
 
 # Dev notes
 - Opening plots with webbrowser.open to copy plots easily from the browser to the clipboard. Not
