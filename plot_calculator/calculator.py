@@ -222,6 +222,8 @@ hh = help_plot
 lgs = solve
 F = R
 frac3 = R
+binom = scipy.special.binom
+factorial = scipy.special.factorial
 
 # Default sympy symbols
 a = symbols('a')
