@@ -8,7 +8,18 @@ functions and to see examples.
 
 # Installation
 
-## (1) With pypoetry
+## (1) With virtualenv (recommended way)
+```
+virtualenv myenv
+git clone https://github.com/eayin2/plot_calculator.git
+cd plot_calculator
+../myenv/bin/pip3 install .
+```
+
+Run the calculator by executing: `../myenv/bin/plot_calculator`
+
+
+## (2) Alternatively install with pypoetry
 Install pypoetry, see: https://github.com/python-poetry/poetry
 
 Then:
@@ -30,15 +41,6 @@ Note:
   add `wt.exe` prior to the plot_calculator.exe path in the shortcut properties. `wt.exe` is
   Windows Terminal in Windows 10 (not installed by default).
 
-## (2) With virtualenv
-```
-virtualenv myenv
-git clone https://github.com/eayin2/plot_calculator.git
-cd plot_calculator
-../myenv/bin/pip3 install .
-```
-
-Then Run: `../myenv/bin/plot_calculator` to start the calculator.
 
 # Dev notes
 - Opening plots with webbrowser.open to copy plots easily from the browser to the clipboard. Not
